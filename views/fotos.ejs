@@ -7,26 +7,54 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     /* Buttons */
-    button { @apply transition-all duration-300 ease-in-out; }
-    button:hover { @apply shadow-lg; }
+    button {
+      @apply transition-all duration-300 ease-in-out;
+    }
+    button:hover {
+      @apply shadow-lg;
+    }
 
     /* Image Cards */
-    .image-card { 
-      @apply bg-white rounded-lg shadow-md p-2 flex flex-col items-center transition-transform duration-200 hover:scale-105; 
+    .image-card {
+      @apply bg-white rounded-lg shadow-md p-3 flex flex-col items-center transition-transform duration-200 hover:scale-105;
     }
-    .image-card img { @apply max-w-full h-40 object-cover rounded-lg mb-2; }
-    .image-card p { @apply text-gray-700 text-xs break-all truncate; }
+    .image-card img {
+      @apply max-w-full h-40 object-cover rounded-lg mb-2;
+    }
+    .image-card p {
+      @apply text-gray-700 text-xs break-all truncate;
+    }
 
     /* Gallery Section */
-    .gallery-section { @apply bg-gray-50 p-6 rounded-lg shadow-md; }
+    .gallery-section {
+      @apply bg-gray-50 p-6 rounded-lg shadow-md;
+    }
 
     /* Tabs */
-    .tab-button { @apply px-4 py-2 font-semibold rounded-t-lg cursor-pointer border-b-2 border-transparent; }
-    .tab-button.active { @apply border-green-700 text-green-700; }
+    .tab-button {
+      @apply px-4 py-2 font-semibold rounded-t-lg cursor-pointer border-b-2 border-transparent;
+    }
+    .tab-button.active {
+      @apply border-green-700 text-green-700;
+    }
 
     /* Fade-in animation */
-    .fade-in { @apply opacity-0 transform translate-y-4 transition-all duration-700; }
-    .fade-in.visible { @apply opacity-100 translate-y-0; }
+    .fade-in {
+      @apply opacity-0 transform translate-y-4 transition-all duration-700;
+    }
+    .fade-in.visible {
+      @apply opacity-100 translate-y-0;
+    }
+
+    /* Upload Form */
+    .upload-form {
+      @apply flex flex-col md:flex-row items-start md:items-center gap-4 mb-4;
+    }
+
+    /* Always show upload button */
+    .upload-btn-wrapper {
+      @apply sticky top-4 z-10;
+    }
   </style>
 </head>
 <body class="bg-gray-100 min-h-screen p-6 font-sans">
@@ -52,12 +80,14 @@
       <h2 class="text-xl font-semibold mb-4 text-green-800">Fotos Paquetes</h2>
 
       <!-- Upload Section -->
-      <form action="/admin/photos/upload" method="POST" enctype="multipart/form-data" class="flex flex-col md:flex-row items-start md:items-center gap-4 mb-4">
-        <input type="hidden" name="folder" value="ManuFigueroaViajes/Packs">
-        <input type="file" name="image" required class="border p-2 rounded">
-        <button type="submit" class="bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded shadow-lg">Subir</button>
-        <p class="text-sm text-gray-600 mt-2 md:mt-0">Luego de subir la foto esperar unos segundos y refrescar la página.</p>
-      </form>
+      <div class="upload-btn-wrapper">
+        <form action="/admin/photos/upload" method="POST" enctype="multipart/form-data" class="upload-form">
+          <input type="hidden" name="folder" value="ManuFigueroaViajes/Packs">
+          <input type="file" name="image" required class="border p-2 rounded">
+          <button type="submit" class="bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded shadow-lg">Subir</button>
+          <p class="text-sm text-gray-600 mt-2 md:mt-0">Luego de subir la foto esperar unos segundos y refrescar la página.</p>
+        </form>
+      </div>
 
       <!-- Image Grid -->
       <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
@@ -87,12 +117,14 @@
       <h2 class="text-xl font-semibold mb-4 text-green-800">Fotos Slider</h2>
 
       <!-- Upload Section -->
-      <form action="/admin/photos/upload" method="POST" enctype="multipart/form-data" class="flex flex-col md:flex-row items-start md:items-center gap-4 mb-4">
-        <input type="hidden" name="folder" value="ManuFigueroaViajes/HeroSlider">
-        <input type="file" name="image" required class="border p-2 rounded">
-        <button type="submit" class="bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded shadow-lg">Subir</button>
-        <p class="text-sm text-gray-600 mt-2 md:mt-0">Luego de subir la foto esperar unos segundos y refrescar la página.</p>
-      </form>
+      <div class="upload-btn-wrapper">
+        <form action="/admin/photos/upload" method="POST" enctype="multipart/form-data" class="upload-form">
+          <input type="hidden" name="folder" value="ManuFigueroaViajes/HeroSlider">
+          <input type="file" name="image" required class="border p-2 rounded">
+          <button type="submit" class="bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded shadow-lg">Subir</button>
+          <p class="text-sm text-gray-600 mt-2 md:mt-0">Luego de subir la foto esperar unos segundos y refrescar la página.</p>
+        </form>
+      </div>
 
       <!-- Image Grid -->
       <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
