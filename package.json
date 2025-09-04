@@ -1,7 +1,7 @@
 {
-  "name": "xs2event-poc",
+  "name": "ManuViajes",
   "version": "1.0.0",
-  "description": "POC for XS2Event in Spanish",
+  "description": "ManuViajes",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
