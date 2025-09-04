@@ -34,7 +34,8 @@ const PORT = config.port;
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-
+// Tell Express it is behind a proxy (important for secure cookies on Render)
+app.set('trust proxy', 1);
 
 // Middleware
 app.use(express.json({ limit: '1mb' }));
@@ -107,7 +108,6 @@ app.use((req, res) => {
 
 // Server
 app.listen(PORT, () => console.log(`App running on http://localhost:${PORT}`));
-
 
 /* Global error handler */
 app.use((err, req, res, next) => {
