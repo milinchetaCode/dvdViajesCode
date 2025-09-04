@@ -69,7 +69,6 @@ router.get('/panel', requireLogin, async (req, res) => {
   }
 });
 
-
 router.post('/panel', requireLogin, async (req, res) => {
   try {
     await savePackagesJSON(req.body.paquetes);
@@ -86,21 +85,20 @@ router.post('/panel', requireLogin, async (req, res) => {
 ============================ */
 router.get('/fotos', requireLogin, async (req, res) => {
   try {
-    const heroResponse = await cloudinary.search
-      .expression('folder:qualyTours/hero')
+    const sliderResponse = await cloudinary.search
+      .expression('folder:ManuFigueroaViajes/HeroSlider')
       .sort_by('public_id', 'desc')
       .max_results(100)
       .execute();
 
     const paquetesResponse = await cloudinary.search
-      .expression('folder:qualyTours/paquetes')
+      .expression('folder:ManuFigueroaViajes/Packs')
       .sort_by('public_id', 'desc')
       .max_results(100)
       .execute();
 
-    // Correct path for fotos.ejs
     res.render('fotos', {
-      heroImages: heroResponse.resources,
+      sliderImages: sliderResponse.resources,
       paquetesImages: paquetesResponse.resources,
     });
   } catch (err) {
