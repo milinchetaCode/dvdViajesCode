@@ -4,8 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Galería Admin - QualyTours</title>
-  <link rel="stylesheet" href="/styles/output.css"> <!-- compiled Tailwind -->
-  <script src="https://unpkg.com/feather-icons"></script>
+  <link rel="stylesheet" href="/styles/output.css">
 </head>
 <body class="bg-gray-100 min-h-screen font-sans text-gray-800 p-6">
 
@@ -20,8 +19,8 @@
 
   <!-- Tabs -->
   <div class="mb-6 flex space-x-4 border-b-2 border-gray-200">
-    <button class="tab-button active" data-tab="paquetes">Fotos Paquetes</button>
-    <button class="tab-button" data-tab="slider">Fotos Slider</button>
+    <button class="tab-button active px-4 py-2 font-semibold rounded-t-lg cursor-pointer border-b-2 border-green-700 text-green-700" data-tab="paquetes">Fotos Paquetes</button>
+    <button class="tab-button px-4 py-2 font-semibold rounded-t-lg cursor-pointer border-b-2 border-transparent text-gray-700" data-tab="slider">Fotos Slider</button>
   </div>
 
   <!-- Tab Contents -->
@@ -29,7 +28,6 @@
     <div class="bg-gray-50 p-6 rounded-lg shadow-md">
       <h2 class="text-xl font-semibold mb-4 text-green-800">Fotos Paquetes</h2>
 
-      <!-- Upload Form -->
       <form action="/admin/photos/upload" method="POST" enctype="multipart/form-data" class="flex flex-col md:flex-row items-start md:items-center gap-4 mb-4">
         <input type="hidden" name="folder" value="ManuFigueroaViajes/Packs">
         <input type="file" name="image" required class="border p-2 rounded">
@@ -37,18 +35,16 @@
         <p class="text-sm text-gray-600 mt-2 md:mt-0">Luego de subir la foto esperar unos segundos y refrescar la página.</p>
       </form>
 
-      <!-- Image Grid -->
       <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         <% if (paquetesImages && paquetesImages.length) { %>
           <% paquetesImages.forEach(img => { %>
-            <% const url = img.secure_url || img; %> <!-- fallback if img is string -->
             <div class="bg-white rounded-lg shadow-md p-2 flex flex-col items-center transition-transform duration-200 hover:scale-105">
-              <img src="<%= url %>" alt="Imagen de paquete" class="max-w-full h-40 object-cover rounded-lg mb-2" />
-              <p class="text-gray-700 text-xs break-all truncate"><%= url %></p>
+              <img src="<%= img.secure_url %>" alt="<%= img.public_id %>" class="max-w-full h-40 object-cover rounded-lg mb-2" />
+              <p class="text-gray-700 text-xs break-all truncate"><%= img.secure_url %></p>
               <div class="flex space-x-2 mt-2">
-                <button type="button" onclick="navigator.clipboard.writeText('<%= url %>')" class="bg-green-700 hover:bg-green-800 text-white px-2 py-1 rounded text-sm">Copiar URL</button>
+                <button type="button" data-url="<%= img.secure_url %>" class="copy-url-btn bg-green-700 hover:bg-green-800 text-white px-2 py-1 rounded text-sm">Copiar URL</button>
                 <form action="/admin/photos/delete" method="POST">
-                  <input type="hidden" name="public_id" value="<%= img.public_id || img %>">
+                  <input type="hidden" name="public_id" value="<%= img.public_id %>">
                   <button type="submit" class="bg-red-600 hover:bg-red-500 text-white px-2 py-1 rounded text-sm">Eliminar</button>
                 </form>
               </div>
@@ -65,7 +61,6 @@
     <div class="bg-gray-50 p-6 rounded-lg shadow-md">
       <h2 class="text-xl font-semibold mb-4 text-green-800">Fotos Slider</h2>
 
-      <!-- Upload Form -->
       <form action="/admin/photos/upload" method="POST" enctype="multipart/form-data" class="flex flex-col md:flex-row items-start md:items-center gap-4 mb-4">
         <input type="hidden" name="folder" value="ManuFigueroaViajes/HeroSlider">
         <input type="file" name="image" required class="border p-2 rounded">
@@ -73,18 +68,16 @@
         <p class="text-sm text-gray-600 mt-2 md:mt-0">Luego de subir la foto esperar unos segundos y refrescar la página.</p>
       </form>
 
-      <!-- Image Grid -->
       <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         <% if (sliderImages && sliderImages.length) { %>
           <% sliderImages.forEach(img => { %>
-            <% const url = img.secure_url || img; %>
             <div class="bg-white rounded-lg shadow-md p-2 flex flex-col items-center transition-transform duration-200 hover:scale-105">
-              <img src="<%= url %>" alt="Imagen slider" class="max-w-full h-40 object-cover rounded-lg mb-2" />
-              <p class="text-gray-700 text-xs break-all truncate"><%= url %></p>
+              <img src="<%= img.secure_url %>" alt="<%= img.public_id %>" class="max-w-full h-40 object-cover rounded-lg mb-2" />
+              <p class="text-gray-700 text-xs break-all truncate"><%= img.secure_url %></p>
               <div class="flex space-x-2 mt-2">
-                <button type="button" onclick="navigator.clipboard.writeText('<%= url %>')" class="bg-green-700 hover:bg-green-800 text-white px-2 py-1 rounded text-sm">Copiar URL</button>
+                <button type="button" data-url="<%= img.secure_url %>" class="copy-url-btn bg-green-700 hover:bg-green-800 text-white px-2 py-1 rounded text-sm">Copiar URL</button>
                 <form action="/admin/photos/delete" method="POST">
-                  <input type="hidden" name="public_id" value="<%= img.public_id || img %>">
+                  <input type="hidden" name="public_id" value="<%= img.public_id %>">
                   <button type="submit" class="bg-red-600 hover:bg-red-500 text-white px-2 py-1 rounded text-sm">Eliminar</button>
                 </form>
               </div>
@@ -97,19 +90,8 @@
     </div>
   </div>
 
-  <script>
-    // Tabs
-    const tabButtons = document.querySelectorAll('.tab-button');
-    const tabContents = document.querySelectorAll('.tab-content');
+  <!-- External JS for tabs & copy -->
+  <script src="/js/fotos.js"></script>
 
-    tabButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        tabButtons.forEach(b => b.classList.remove('active', 'border-green-700', 'text-green-700'));
-        tabContents.forEach(tc => tc.classList.add('hidden'));
-        btn.classList.add('active', 'border-green-700', 'text-green-700');
-        document.getElementById('tab-' + btn.dataset.tab).classList.remove('hidden');
-      });
-    });
-  </script>
 </body>
 </html>
