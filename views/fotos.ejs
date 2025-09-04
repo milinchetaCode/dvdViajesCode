@@ -13,6 +13,29 @@
       @apply shadow-lg;
     }
 
+    /* Tabs */
+    .tab-button {
+      @apply px-4 py-2 font-semibold rounded-t-lg bg-gray-200 hover:bg-gray-300 cursor-pointer;
+    }
+    .tab-button.active {
+      @apply bg-white border-b-0 font-bold;
+    }
+
+    /* Tab Content */
+    .tab-content {
+      @apply border border-t-0 border-gray-300 rounded-b-lg p-4 bg-white;
+    }
+
+    /* Gallery Section */
+    .gallery-section {
+      @apply mt-4;
+    }
+
+    /* Upload form sticky */
+    .upload-form {
+      @apply bg-white p-4 rounded-lg shadow-md mb-4 sticky top-0 z-50 flex flex-col md:flex-row items-start md:items-center gap-4;
+    }
+
     /* Image Cards */
     .image-card {
       @apply bg-white rounded-lg shadow-md p-2 flex flex-col items-center transition-transform duration-200 hover:scale-105;
@@ -22,11 +45,6 @@
     }
     .image-card p {
       @apply text-gray-700 text-xs break-all truncate;
-    }
-
-    /* Gallery Section */
-    .gallery-section {
-      @apply bg-gray-50 p-6 rounded-lg shadow-md;
     }
 
     /* Fade-in animation for images */
@@ -49,22 +67,23 @@
     </div>
   </header>
 
-  <!-- Paquetes Gallery Section -->
-  <div class="gallery-section">
-    <h2 class="text-xl font-semibold mb-4 text-green-800">Paquetes Images</h2>
+  <!-- Tabs -->
+  <div class="flex space-x-2 mb-2">
+    <button class="tab-button active" data-tab="paquetes">Fotos Paquetes</button>
+    <button class="tab-button" data-tab="slider">Fotos Slider</button>
+  </div>
 
-    <!-- Upload Section with horizontal lines -->
-    <hr class="mb-4 border-gray-300">
-    <form action="/admin/photos/upload" method="POST" enctype="multipart/form-data" class="flex flex-col md:flex-row items-start md:items-center gap-4 mb-4">
-      <input type="hidden" name="folder" value="qualyTours/paquetes">
+  <!-- Tab Contents -->
+  <div id="paquetes" class="tab-content">
+    <!-- Upload Form -->
+    <form action="/admin/photos/upload" method="POST" enctype="multipart/form-data" class="upload-form">
+      <input type="hidden" name="folder" value="ManuFigueroaViajes/Packs">
       <input type="file" name="image" required class="border p-2 rounded">
-      <button type="submit" class="bg-green-700 hover:bg-brand/90 text-white px-4 py-2 rounded shadow-lg">Subir</button>
+      <button type="submit" class="bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded shadow-lg">Subir</button>
       <p class="text-sm text-gray-600 mt-2 md:mt-0">Luego de subir la foto esperar unos segundos y refrescar la pagina.</p>
     </form>
-    <hr class="mb-6 border-gray-300">
 
-    <!-- Image Grid -->
-    <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <div class="gallery-section grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       <% paquetesImages.forEach((img) => { %>
         <div class="image-card fade-in">
           <img src="<%= img.secure_url %>" alt="<%= img.public_id %>">
@@ -81,14 +100,54 @@
     </div>
   </div>
 
+  <div id="slider" class="tab-content hidden">
+    <!-- Upload Form -->
+    <form action="/admin/photos/upload" method="POST" enctype="multipart/form-data" class="upload-form">
+      <input type="hidden" name="folder" value="ManuFigueroaViajes/HeroSlider">
+      <input type="file" name="image" required class="border p-2 rounded">
+      <button type="submit" class="bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded shadow-lg">Subir</button>
+      <p class="text-sm text-gray-600 mt-2 md:mt-0">Luego de subir la foto esperar unos segundos y refrescar la pagina.</p>
+    </form>
+
+    <div class="gallery-section grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <% sliderImages.forEach((img) => { %>
+        <div class="image-card fade-in">
+          <img src="<%= img.secure_url %>" alt="<%= img.public_id %>">
+          <p class="text-xs text-gray-700 break-all truncate"><%= img.secure_url %></p>
+          <div class="flex space-x-2 mt-2">
+            <button type="button" onclick="navigator.clipboard.writeText('<%= img.secure_url %>')" title="Copiar URL" class="bg-brand hover:bg-blue-500 text-white px-2 py-1 rounded text-sm">Copiar URL</button>
+            <form action="/admin/photos/delete" method="POST">
+              <input type="hidden" name="public_id" value="<%= img.public_id %>">
+              <button type="submit" title="Eliminar imagen" class="bg-red-600 hover:bg-red-500 text-white px-2 py-1 rounded text-sm">Eliminar</button>
+            </form>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+
   <script>
-    // Fade-in animation for images
+    // Tabs functionality
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const target = btn.dataset.tab;
+        tabContents.forEach(c => c.classList.add('hidden'));
+        document.getElementById(target).classList.remove('hidden');
+      });
+    });
+
+    // Fade-in animation
     window.addEventListener('DOMContentLoaded', () => {
       const cards = document.querySelectorAll('.fade-in');
       cards.forEach((card, index) => {
         setTimeout(() => {
           card.classList.add('visible');
-        }, index * 100); // stagger effect
+        }, index * 100);
       });
     });
   </script>
