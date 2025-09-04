@@ -13,7 +13,7 @@
     <!-- Banner -->
     <div class="relative w-full flex justify-center">
       <div class="relative w-full sm:w-4/5 md:w-3/4 lg:w-3/4">
-        <a href="/f1" class="block relative card overflow-hidden transition-transform hover:scale-[1.02]">
+        <a href="/f1" class="block relative overflow-hidden rounded-2xl transition-transform transform hover:scale-[1.02]">
           <img src="/images/f1.jpeg" alt="Fórmula 1" class="w-full h-80 object-cover rounded-2xl" />
           <div class="absolute inset-0 bg-black/40 flex flex-col justify-center items-center text-center text-white px-4">
             <h3 class="text-4xl sm:text-5xl font-extrabold mb-4">Fórmula 1</h3>
@@ -30,7 +30,7 @@
 </section>
 
 <!-- Paquetes turísticos -->
-<div class="content-container px-4 md:px-6 lg:px-8">
+<div class="px-4 md:px-6 lg:px-8">
   <section class="mb-12">
     <div class="text-center mb-8">
       <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold flex items-center justify-center gap-2 text-brand">
@@ -43,7 +43,7 @@
     <% if (packages && packages.length) { %>
       <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <% packages.filter(pkg => pkg.visible).forEach(pkg => { %>
-          <li class="card p-6 transition-all duration-300 hover:shadow-xl">
+          <li class="bg-white p-6 rounded-2xl border border-gray-200 shadow-md transition-all duration-300 hover:shadow-xl">
             <img 
               src="<%= pkg.photoUrl && pkg.photoUrl.trim() !== '' ? pkg.photoUrl.trim() : (pkg.foto && pkg.foto.trim() !== '' ? '/images/' + pkg.foto.trim() + '.jpeg' : '/images/default.jpeg') %>"
               alt="<%= pkg.eventName %>"
@@ -65,7 +65,8 @@
                 Precio no disponible
               <% } %>
             </p>
-            <a href="/paquete/<%= pkg.id %>" class="inline-block mt-3 text-sm text-white btn-brand">
+            <a href="/paquete/<%= pkg.id %>" 
+               class="inline-block mt-3 text-sm text-white bg-brand rounded-lg px-4 py-2 font-semibold hover:bg-brand/90 transition-colors">
               Ver detalles
             </a>
           </li>
