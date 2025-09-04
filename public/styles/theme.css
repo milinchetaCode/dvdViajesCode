@@ -1,10 +1,76 @@
+:root { 
+  --brand: #1A2238; 
+  --accent: #D4AF37; 
+  --bg: #F7F7FA; 
+  --text: #1f2937; 
+}
 
-:root { --brand:#1A2238; --accent:#D4AF37; --bg:#F7F7FA; --text:#1f2937; }
-html,body{background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;}
-.brand-gradient{background:linear-gradient(135deg,#0f172a,#1A2238)}
-.card{background:#fff;border-radius:1rem;box-shadow:0 10px 25px rgba(0,0,0,.08),0 2px 6px rgba(0,0,0,.05);border:1px solid rgba(17,24,39,.06)}
-.btn-brand{background:var(--brand);color:#fff;border-radius:.75rem;padding:.6rem 1rem;font-weight:600;transition:transform .05s ease, box-shadow .2s ease, background-color .2s ease}
-.btn-brand:hover{background:#0e1626;box-shadow:0 8px 16px rgba(26,34,56,.25)}
-.btn-accent{background:var(--accent);color:#111827;border-radius:.75rem;padding:.6rem 1rem;font-weight:700}
-.badge-accent{color:var(--brand);background:rgba(212,175,55,.15);border:1px solid rgba(212,175,55,.35);border-radius:999px;padding:.25rem .6rem;font-size:.8rem;font-weight:600}
-.header-blur{backdrop-filter:blur(6px)}
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial;
+}
+
+/* Brand gradient */
+.brand-gradient {
+  background: linear-gradient(135deg, #0f172a, #1A2238);
+}
+
+/* Card styling */
+.card {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px rgba(0,0,0,.08), 0 2px 6px rgba(0,0,0,.05);
+  border: 1px solid rgba(17,24,39,.06);
+}
+
+/* Buttons */
+.btn-brand {
+  background: var(--brand);
+  color: #fff;
+  border-radius: .75rem;
+  padding: .6rem 1rem;
+  font-weight: 600;
+  transition: transform .05s ease, box-shadow .2s ease, background-color .2s ease;
+}
+.btn-brand:hover {
+  background: #0e1626;
+  box-shadow: 0 8px 16px rgba(26,34,56,.25);
+}
+
+.btn-accent {
+  background: var(--accent);
+  color: #111827;
+  border-radius: .75rem;
+  padding: .6rem 1rem;
+  font-weight: 700;
+}
+
+/* Badge */
+.badge-accent {
+  color: var(--brand);
+  background: rgba(212,175,55,.15);
+  border: 1px solid rgba(212,175,55,.35);
+  border-radius: 999px;
+  padding: .25rem .6rem;
+  font-size: .8rem;
+  font-weight: 600;
+}
+
+/* Header backdrop blur */
+.header-blur {
+  backdrop-filter: blur(6px);
+}
+
+/* Header brand background */
+.header-brand {
+  background-color: var(--brand);
+  color: white;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Logo hover effect */
+.header-brand .logo-link:hover {
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
