@@ -58,18 +58,18 @@ async function saveJSONToGist(gistId, data, filename) {
 
 // packages.json cargados desde el admin panel por los vendedores
 async function loadPackagesJSON() {
-  return loadJSONFromGist(PKG_GIST_ID, 'packages.json');
+  return loadJSONFromGist(PKG_GIST_ID, 'MFV_packages.json');
 }
 async function savePackagesJSON(data) {
-  return saveJSONToGist(PKG_GIST_ID, data, 'packages.json');
+  return saveJSONToGist(PKG_GIST_ID, data, 'MFV_packages.json');
 }
 
 // destacados.json ofertas destacadas de XS2EVENT seleccionadas por los vendedores en el admin panel
 async function loadDestacadosJSON() {
-  return loadJSONFromGist(DES_GIST_ID, 'destacados.json');
+  return loadJSONFromGist(DES_GIST_ID, 'MFV_destacados.json');
 }
 async function saveDestacadosJSON(data) {
-  return saveJSONToGist(DES_GIST_ID, data, 'destacados.json');
+  return saveJSONToGist(DES_GIST_ID, data, 'MFV_destacados.json');
 }
 
 module.exports = {
