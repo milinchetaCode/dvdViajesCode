@@ -109,34 +109,7 @@
   <%- include('partials/footer') %>
 
   <!-- Slider JS -->
-  <script>
-    const sliderInner = document.getElementById('sliderInner');
-    const slides = sliderInner ? sliderInner.children : [];
-    let currentIndex = 0;
+ <script src="/js/heroSlider.js" defer></script>
 
-    function showSlide(index) {
-      if (slides.length === 0) return;
-      sliderInner.style.transform = `translateX(-${index * 100}%)`;
-    }
-
-    document.getElementById('prevSlide')?.addEventListener('click', () => {
-      currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-      showSlide(currentIndex);
-    });
-
-    document.getElementById('nextSlide')?.addEventListener('click', () => {
-      currentIndex = (currentIndex + 1) % slides.length;
-      showSlide(currentIndex);
-    });
-
-    if (slides.length > 1) {
-      setInterval(() => {
-        currentIndex = (currentIndex + 1) % slides.length;
-        showSlide(currentIndex);
-      }, 5000);
-    }
-
-    feather.replace();
-  </script>
 </body>
 </html>
