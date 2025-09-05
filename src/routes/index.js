@@ -38,6 +38,11 @@ router.get("/", async (req, res) => {
 
       heroImages = result.resources.map((img) => img.secure_url);
       console.log("Hero images extracted:", heroImages); // <-- DEBUG
+
+      // Optional: log each public_id
+      result.resources.forEach((img, index) => {
+        console.log(`Image ${index}: ${img.public_id}`);
+      });
     } catch (err) {
       console.error("Cloudinary error:", err);
     }
