@@ -3,8 +3,9 @@
 :root { 
   --brand: #1A2238;   /* navy */
   --accent: #D4AF37;  /* gold */
-  --bg: #f7f7fa;      /* light gray */
-  --text: #1f2937;    /* dark gray */
+  --bg: #1A2238;      /* global background: dark navy */
+  --text: #f7f7fa;    /* global text: light */
+  --text-dark: #1f2937; /* for inside white cards */
 }
 
 html, body {
@@ -12,6 +13,8 @@ html, body {
   color: var(--text);
   font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial;
   line-height: 1.6;
+  margin: 0;
+  padding: 0;
 }
 
 /* Typography */
@@ -19,16 +22,12 @@ h1, h2, h3, h4 {
   font-family: 'Playfair Display', serif;
   font-weight: 700;
   letter-spacing: -0.5px;
+  color: #fff; /* headings white by default */
 }
 
 p {
   font-size: 1rem;
   line-height: 1.6;
-}
-
-/* Brand gradient / hero background */
-.brand-gradient {
-  background: var(--brand);
 }
 
 /* Accent divider */
@@ -43,6 +42,7 @@ p {
 /* Card styling */
 .card {
   background: #fff;
+  color: var(--text-dark);
   border-radius: 1rem;
   padding: 1.5rem;
   box-shadow: 0 4px 12px rgba(0,0,0,.05);
@@ -51,6 +51,9 @@ p {
 .card:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 24px rgba(0,0,0,.1);
+}
+.card h3 {
+  color: var(--text-dark);
 }
 
 /* Buttons */
@@ -89,11 +92,6 @@ p {
   font-weight: 600;
 }
 
-/* Header backdrop blur */
-.header-blur {
-  backdrop-filter: blur(6px);
-}
-
 /* Header brand background */
 .header-brand {
   background-color: var(--brand);
@@ -101,7 +99,6 @@ p {
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-/* Logo hover effect */
 .header-brand .logo-link:hover {
   opacity: 0.8;
   transition: opacity 0.2s ease;
