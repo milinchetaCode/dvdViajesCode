@@ -3,36 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= paquete.eventName %> - Qualy Tours</title>
+  <title><%= paquete.eventName %> - Manuel Figueroa Viajes</title>
 
   <!-- Tailwind -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '#1D4ED8',
-            accent: '#22C55E',
-            customRed: '#DC2626',
-            darkGray: '#333333'
-          }
-        }
-      }
-    }
-  </script>
+  <link rel="stylesheet" href="/styles/output.css">
+  <link rel="stylesheet" href="/styles/theme.css">
+
+  <script src="https://unpkg.com/feather-icons"></script>
 </head>
-<body class="bg-white text-gray-800 font-sans">
+<body class="bg-brand text-light font-sans">
 
   <!-- Navbar -->
   <%- include('partials/header') %>
 
   <!-- Page content -->
-  <section class="px-4 py-12 max-w-5xl mx-auto">
-    <div class="bg-white p-6 sm:p-10 rounded-2xl shadow-md border border-gray-100">
+  <section class="px-4 py-16 max-w-5xl mx-auto">
+    <div class="bg-white p-6 sm:p-10 rounded-2xl shadow-lg border border-gray-100">
       <div class="grid md:grid-cols-2 gap-8">
 
-        <!-- Image + Pill -->
+        <!-- Image + Badge -->
         <div class="relative">
           <img 
             src="<%= paquete.photoUrl && paquete.photoUrl.trim() !== '' 
@@ -41,8 +30,7 @@
             alt="<%= paquete.eventName %>" 
             class="w-full h-64 object-cover rounded-2xl shadow-sm border border-gray-200"
           />
-          <!-- ✅ Red pill -->
-          <span class="absolute top-4 left-4 bg-customRed text-white text-xs sm:text-sm font-semibold px-4 py-2 rounded-full shadow-md">
+          <span class="absolute top-4 left-4 badge-accent text-xs sm:text-sm font-semibold px-4 py-2 rounded-full shadow-md">
             Paquete
           </span>
         </div>
@@ -51,17 +39,17 @@
         <div>
           <h1 class="text-3xl sm:text-4xl font-bold text-darkGray mb-4 tracking-tight"><%= paquete.eventName %></h1>
 
-          <p class="text-gray-600 mb-4 whitespace-pre-line"><%= paquete.description %></p>
+          <p class="text-gray-700 mb-4 whitespace-pre-line"><%= paquete.description %></p>
 
           <ul class="space-y-2 text-gray-700 text-sm sm:text-base">
             <li><strong>📅 Fechas:</strong> <%= paquete.availabilityDates %></li>
           </ul>
 
-          <p class="text-2xl text-customRed font-bold mt-6">💵 U$S <%= paquete.ticketPrice %></p>
+          <p class="text-2xl text-accent font-bold mt-6">💵 U$S <%= paquete.ticketPrice %></p>
 
           <!-- WhatsApp Button -->
           <a
-            href="https://wa.me/5491166891154?text=<%= encodeURIComponent(
+            href="https://wa.me/5491133931500?text=<%= encodeURIComponent(
               `Hola, estoy interesado en el paquete:\n\n` +
               `Evento: ${paquete.eventName}\n` +
               `Descripción: ${paquete.description}\n` +
@@ -71,19 +59,17 @@
             ) %>"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-3 mt-6 bg-customRed hover:bg-red-700 text-white font-semibold px-6 py-3 rounded-lg shadow-md transition-all duration-200 transform hover:scale-105"
+            class="btn-accent inline-flex items-center gap-3 mt-6"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="white" viewBox="0 0 24 24">
-              <path d="M20.52 3.48A11.96 11.96 0 0 0 12 0C5.373 0 0 5.373 0 12a11.96 11.96 0 0 0 3.48 8.52l-1.72 6.48 6.48-1.72A11.96 11.96 0 0 0 12 24c6.627 0 12-5.373 12-12 0-3.2-1.2-6.2-3.48-8.52zm-8.52 17c-2.4 0-4.68-.88-6.48-2.32l-.48-.36-3.84 1.02 1.02-3.84-.36-.48A9.956 9.956 0 0 1 2 12c0-5.52 4.48-10 10-10s10 4.48 10 10-4.48 10-10 10zm5.64-7.44c-.32-.16-1.88-.92-2.16-1.04s-.48-.16-.68.16-.78.92-.96 1.12-.36.24-.68.08a8.6 8.6 0 0 1-2.52-1.56 9.48 9.48 0 0 1-1.76-2.16c-.16-.32 0-.48.12-.64s.28-.36.42-.54.16-.28.24-.48s.08-.32 0-.48c-.08-.16-.68-1.64-.92-2.24s-.48-.48-.68-.48-.32 0-.48 0a1.07 1.07 0 0 0-.8.36c-.28.28-1.08 1.08-1.08 2.64s1.12 3.08 1.28 3.28 2.16 3.44 5.28 4.8c.72.32 1.28.52 1.72.68.72.24 1.36.2 1.88.12.56-.08 1.88-.76 2.16-1.52.28-.76.28-1.44.2-1.52-.08-.08-.28-.12-.6-.28z"/>
-            </svg>
+            <i data-feather="message-circle" class="w-5 h-5 text-light"></i>
             Contáctanos por WhatsApp
           </a>
 
-          <!-- Email Fallback -->
-          <p class="mt-4 text-sm">
+          <!-- Email fallback -->
+          <p class="mt-4 text-sm text-gray-700">
             ¿No tenés WhatsApp?
             <a
-              href="mailto:info@qualy.tours?subject=<%= encodeURIComponent('Consulta sobre paquete: ' + paquete.eventName) %>&body=<%= encodeURIComponent(
+              href="mailto:info@manuelfigueroaviajes.com?subject=<%= encodeURIComponent('Consulta sobre paquete: ' + paquete.eventName) %>&body=<%= encodeURIComponent(
                 `Hola, estoy interesado en el siguiente paquete:\n\n` +
                 `Evento: ${paquete.eventName}\n` +
                 `Descripción: ${paquete.description}\n` +
@@ -91,7 +77,7 @@
                 `Precio: U$S ${paquete.ticketPrice}\n\n` +
                 `Espero su respuesta. Gracias.`
               ) %>"
-              class="text-customRed hover:underline"
+              class="text-accent hover:underline"
             >
               Contáctanos por email
             </a>
@@ -103,5 +89,9 @@
   </section>
 
   <%- include('partials/footer') %>
+
+  <script>
+    feather.replace();
+  </script>
 </body>
 </html>
