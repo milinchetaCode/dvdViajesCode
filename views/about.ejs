@@ -3,58 +3,65 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiénes somos - Qualy Tours</title>
-  <link rel="stylesheet" href="/styles/output.css"> <!-- compiled Tailwind -->
+  <title>Quiénes somos - Manuel Figueroa Viajes</title>
+
+  <!-- Tailwind compiled CSS -->
+  <link rel="stylesheet" href="/styles/output.css">
+
+  <!-- Theme overrides -->
+  <link rel="stylesheet" href="/styles/theme.css">
+
+  <script src="https://unpkg.com/feather-icons"></script>
 </head>
-<body class="text-gray-800 font-sans bg-gray-50">
+<body class="font-sans bg-brand text-light">
 
   <%- include('partials/header') %>
 
-  <main class="min-h-screen py-10">
-    <div class="container mx-auto px-4">
+  <main class="min-h-screen py-16 px-4 md:px-6 lg:px-8 max-w-5xl mx-auto">
 
-      <!-- Page Title -->
-      <h1 class="text-4xl font-bold text-center text-gray-900 mb-8">
-        ¿Quiénes somos?
-      </h1>
+    <!-- Page Title -->
+    <h1 class="text-4xl md:text-5xl font-bold text-center mb-10 text-brand">
+      ¿Quiénes somos?
+    </h1>
+    <div class="divider mx-auto mb-12"></div>
 
-      <!-- About Text Section -->
-      <section class="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 mb-8">
-        <p class="text-gray-800 leading-relaxed">
-          Lic. en Turismo, con más de 20 años de trayectoria en la industria, desarrollada en múltiples ámbitos, desde compañías aéreas internacionales de primer nivel, agencias de viajes locales y hasta habiendo emprendido un proyecto propio.
-        </p>
-        <p class="text-gray-800 leading-relaxed mt-4">
-          Profesional recibido en la Universidad del Salvador en Buenos Aires.
-        </p>
-      </section>
+    <!-- About Text Section -->
+    <section class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200 text-brand mb-16">
+      <p class="leading-relaxed">
+        Lic. en Turismo, con más de 20 años de trayectoria en la industria, desarrollada en múltiples ámbitos, desde compañías aéreas internacionales de primer nivel, agencias de viajes locales y hasta habiendo emprendido un proyecto propio.
+      </p>
+      <p class="leading-relaxed mt-4">
+        Profesional recibido en la Universidad del Salvador en Buenos Aires.
+      </p>
+    </section>
 
-      <!-- CTA -->
-      <div class="text-center mt-10">
-        <h3 class="text-2xl font-bold text-gray-900 mb-2">
-          ¿Quieres saber más sobre nosotros?
-        </h3>
-        <p class="mb-4 text-gray-800">
-          Estamos aquí para ayudarte a vivir tu pasión deportiva en primera fila.
-        </p>
-        <a
-          href="https://wa.me/5491133931500?text=<%= encodeURIComponent(
-            'Hola, quiero más información sobre Qualy Tours y sus servicios.'
-          ) %>"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-flex items-center gap-3 bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-full font-semibold shadow-lg transition-all duration-200 transform hover:scale-105"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="white" viewBox="0 0 24 24">
-            <path d="M20.52 3.48A11.96 11.96 0 0 0 12 0C5.373 0 0 5.373 0 12a11.96 11.96 0 0 0 3.48 8.52l-1.72 6.48 6.48-1.72A11.96 11.96 0 0 0 12 24c6.627 0 12-5.373 12-12 0-3.2-1.2-6.2-3.48-8.52zm-8.52 17c-2.4 0-4.68-.88-6.48-2.32l-.48-.36-3.84 1.02 1.02-3.84-.36-.48A9.956 9.956 0 0 1 2 12c0-5.52 4.48-10 10-10s10 4.48 10 10-4.48 10-10 10zm5.64-7.44c-.32-.16-1.88-.92-2.16-1.04s-.48-.16-.68.16-.78.92-.96 1.12-.36.24-.68.08a8.6 8.6 0 0 1-2.52-1.56 9.48 9.48 0 0 1-1.76-2.16c-.16-.32 0-.48.12-.64s.28-.36.42-.54.16-.28.24-.48.08-.32 0-.48c-.08-.16-.68-1.64-.92-2.24s-.48-.48-.68-.48-.32 0-.48 0a1.07 1.07 0 0 0-.8.36c-.28.28-1.08 1.08-1.08 2.64s1.12 3.08 1.28 3.28 2.16 3.44 5.28 4.8c.72.32 1.28.52 1.72.68.72.24 1.36.2 1.88.12.56-.08 1.88-.76 2.16-1.52.28-.76.28-1.44.2-1.52-.08-.08-.28-.12-.6-.28z"/>
-          </svg>
-          Contáctanos por WhatsApp
-        </a>
-      </div>
-
+    <!-- CTA -->
+    <div class="text-center">
+      <h3 class="text-2xl md:text-3xl font-bold text-brand mb-4">
+        ¿Quieres saber más sobre nosotros?
+      </h3>
+      <p class="mb-6">
+        Estamos aquí para ayudarte a vivir tu pasión deportiva en primera fila.
+      </p>
+      <a
+        href="https://wa.me/5491133931500?text=<%= encodeURIComponent(
+          'Hola, quiero más información sobre Manuel Figueroa Viajes y sus servicios.'
+        ) %>"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-brand inline-flex items-center gap-3"
+      >
+        <i data-feather="message-circle" class="w-5 h-5"></i>
+        Contáctanos por WhatsApp
+      </a>
     </div>
+
   </main>
 
   <%- include('partials/footer') %>
 
+  <script>
+    feather.replace();
+  </script>
 </body>
 </html>
