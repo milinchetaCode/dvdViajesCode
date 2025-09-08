@@ -36,8 +36,7 @@
               <div class="min-w-full relative">
                 <img 
                   src="<%= imgUrl %>" 
-                  class="w-full h-[500px] object-cover cursor-pointer" 
-                  onclick="openLightbox('<%= imgUrl %>')"
+                  class="w-full h-[500px] object-cover cursor-pointer hero-img"
                 />
                 <div class="absolute inset-0 bg-black/30"></div>
               </div>
@@ -117,20 +116,25 @@
   </div>
 
   <script>
-    function openLightbox(src) {
+    // Lightbox functionality
+    document.addEventListener('DOMContentLoaded', () => {
       const lightbox = document.getElementById('lightbox');
       const lightboxImg = document.getElementById('lightboxImg');
-      lightboxImg.src = src;
-      lightbox.classList.remove('hidden');
-    }
 
-    function closeLightbox() {
-      document.getElementById('lightbox').classList.add('hidden');
-    }
+      document.querySelectorAll('.hero-img').forEach(img => {
+        img.addEventListener('click', () => {
+          lightboxImg.src = img.src;
+          lightbox.classList.remove('hidden');
+        });
+      });
 
-    // Close lightbox when clicking outside the image
-    document.getElementById('lightbox').addEventListener('click', e => {
-      if (e.target.id === 'lightbox') closeLightbox();
+      // Close button
+      window.closeLightbox = () => lightbox.classList.add('hidden');
+
+      // Click outside image to close
+      lightbox.addEventListener('click', e => {
+        if (e.target.id === 'lightbox') window.closeLightbox();
+      });
     });
   </script>
 
