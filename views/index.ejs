@@ -8,10 +8,8 @@
   <!-- Tailwind compiled CSS -->
   <link rel="stylesheet" href="/styles/output.css">
 
-  <!-- Theme overrides (make sure theme.css exists) -->
+  <!-- Theme overrides -->
   <link rel="stylesheet" href="/styles/theme.css">
-
-  <script src="https://unpkg.com/feather-icons"></script>
 </head>
 <body class="font-sans bg-brand text-light">
 
@@ -106,37 +104,10 @@
   <!-- Footer -->
   <%- include('partials/footer') %>
 
-  <!-- Slider JS -->
+  <!-- Scripts -->
+  <script src="/js/feather.min.js" defer></script>
   <script src="/js/heroSlider.js" defer></script>
-
-  <!-- Lightbox -->
-  <div id="lightbox" class="fixed inset-0 bg-black/80 flex items-center justify-center hidden z-50">
-    <img id="lightboxImg" class="max-h-full max-w-full rounded-xl shadow-lg" />
-    <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white text-3xl font-bold">&times;</button>
-  </div>
-
-  <script>
-    // Lightbox functionality
-    document.addEventListener('DOMContentLoaded', () => {
-      const lightbox = document.getElementById('lightbox');
-      const lightboxImg = document.getElementById('lightboxImg');
-
-      document.querySelectorAll('.hero-img').forEach(img => {
-        img.addEventListener('click', () => {
-          lightboxImg.src = img.src;
-          lightbox.classList.remove('hidden');
-        });
-      });
-
-      // Close button
-      window.closeLightbox = () => lightbox.classList.add('hidden');
-
-      // Click outside image to close
-      lightbox.addEventListener('click', e => {
-        if (e.target.id === 'lightbox') window.closeLightbox();
-      });
-    });
-  </script>
+  <script src="/js/main.js" defer></script> <!-- Move your inline JS here -->
 
   <!-- Floating WhatsApp Button -->
   <a 
@@ -148,10 +119,6 @@
   >
     <i data-feather="message-circle" class="w-6 h-6"></i>
   </a>
-
-  <script>
-    feather.replace();
-  </script>
 
 </body>
 </html>
