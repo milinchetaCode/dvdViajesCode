@@ -34,16 +34,16 @@ router.get("/", async (req, res) => {
         .max_results(50)
         .execute();
 
-      console.log("Cloudinary folder contents:", result.resources); // <-- DEBUG
+    //  console.log("Cloudinary folder contents:", result.resources); // <-- DEBUG
 
       heroImages = result.resources.map((img) => img.secure_url);
-      console.log("Hero images extracted:", heroImages); // <-- DEBUG
+      //console.log("Hero images extracted:", heroImages); // <-- DEBUG
 
       result.resources.forEach((img, index) => {
-        console.log(`Image ${index}: ${img.public_id}`);
+        //console.log(`Image ${index}: ${img.public_id}`);
       });
     } catch (err) {
-      console.error("Cloudinary error:", err);
+      //console.error("Cloudinary error:", err);
     }
 
     res.render("index", {
@@ -53,7 +53,7 @@ router.get("/", async (req, res) => {
       currentPage: "home",
     });
   } catch (err) {
-    console.error("Error loading data!", err);
+   // console.error("Error loading data!", err);
     res.status(500).send("Error loading site data");
   }
 });
