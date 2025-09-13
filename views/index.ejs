@@ -22,7 +22,6 @@
   <!-- HERO -->
   <section class="relative mb-16">
     <div class="relative max-w-6xl mx-auto text-center py-20 px-6">
-     
       <div class="divider"></div>
     </div>
 
@@ -33,13 +32,12 @@
           <% if (heroImages && heroImages.length) { %>
             <% heroImages.forEach(imgUrl => { %>
               <div class="min-w-full relative">
-               <img 
+                <img 
                   src="<%= imgUrl %>" 
                   class="w-full h-[500px] object-contain object-center cursor-pointer hero-img" 
                 />
-
-<div class="absolute inset-0 bg-black/30 pointer-events-none"></div>
-
+                <!-- Overlay but non-blocking for clicks -->
+                <div class="absolute inset-0 bg-black/30 pointer-events-none"></div>
               </div>
             <% }) %>
           <% } %>
@@ -61,7 +59,6 @@
     <section class="mb-16">
       <div class="text-center mb-10">
         <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold flex items-center justify-center gap-2">
-          
           Paquetes turísticos
         </h2>
         <div class="divider"></div>
@@ -122,15 +119,15 @@
   <div id="lightbox" class="hidden fixed inset-0 bg-black/90 flex items-center justify-center z-50">
     <!-- Close button -->
     <button onclick="closeLightbox()" 
-            class="absolute top-6 right-8 text-white text-4xl cursor-pointer">
+            class="absolute top-6 right-8 text-white text-5xl z-60 cursor-pointer">
       &times;
     </button>
 
-    <!-- Image -->
+    <!-- Fullscreen Image -->
     <img id="lightboxImg" 
          src="" 
          alt="Full size" 
-         class="max-h-[90vh] max-w-[90vw] object-contain shadow-2xl">
+         class="h-screen w-screen object-contain shadow-2xl">
   </div>
 
   <!-- Main JS (contains feather, lightbox, slider) -->
