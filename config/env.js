@@ -16,7 +16,7 @@ function getConfig() {
     throw new Error('Missing required env vars: ' + missing.join(', '));
   }
   return {
-    port: 3000,
+    port: process.env.PORT ? parseInt(process.env.PORT, 10) : 3000,
     nodeEnv: process.env.NODE_ENV || 'development',
     sessionSecret: process.env.SESSION_SECRET,
     cloudinary: {
