@@ -48,7 +48,16 @@ app.use(
   })
 );
 
-app.use(compression());
+// Ensure compression ignores binary images to prevent 206 Partial Content corruption on Render
+app.use(compression({
+  filter: (req, res) => {
+    if (req.headers['x-no-compression'] || /\.(png|jpe?g|gif|webp|svg|ico)$/i.test(req.url)) {
+      return false; // Skip compression for these file extensions
+    }
+    return compression.filter(req, res); // Default compression for HTML, CSS, JS
+  }
+}));
+
 app.use(morgan('combined'));
 app.use(rateLimiter);
 const PORT = config.port;
