@@ -87,10 +87,8 @@ router.post('/panel', requireLogin, async (req, res) => {
     const paquetes = Object.entries(paquetesForm).map(([id, pkg]) => {
       const existing = existingArray.find(p => p.id === id) || {};
 
-      let ticketPrice = parseFloat(pkg.ticketPrice);
-      if (isNaN(ticketPrice) || ticketPrice < 0) {
-        ticketPrice = parseFloat(existing.ticketPrice) || 0;
-      }
+      // Accept both text and numeric prices (e.g. "USD 300", "call us", 300, etc.)
+      let ticketPrice = pkg.ticketPrice || existing.ticketPrice || '';
 
       return {
         id,
