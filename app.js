@@ -27,7 +27,7 @@ if (missing.length > 0) {
 const app = express();
 app.disable('x-powered-by');
 
-// ✅ Custom Helmet config to allow Cloudinary images
+// ✅ Custom Helmet config to allow Cloudinary images and local images
 app.use(
   helmet({
     contentSecurityPolicy: {
@@ -37,7 +37,7 @@ app.use(
         fontSrc: ["'self'", "https:", "data:"],
         formAction: ["'self'"],
         frameAncestors: ["'self'"],
-        imgSrc: ["'self'", "data:", "https://res.cloudinary.com", "/images/*"],
+        imgSrc: ["'self'", "data:", "https://res.cloudinary.com", "blob:"],
         objectSrc: ["'none'"],
         scriptSrc: ["'self'"],
         scriptSrcAttr: ["'none'"],
