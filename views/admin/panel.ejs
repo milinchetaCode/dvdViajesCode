@@ -227,35 +227,41 @@
     </div>
   </template>
 
-  <script>
-    // Initialize Feather icons
-    feather.replace();
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Initialize Feather icons if available
+    if (typeof feather !== 'undefined') {
+      feather.replace();
+    }
 
     const btnAddPackage = document.getElementById('btn-add-package');
     const packagesContainer = document.getElementById('packages-container');
     const template = document.getElementById('package-card-template');
 
-    // Add package event
+    if (!btnAddPackage || !packagesContainer || !template) {
+      console.error('Add package button or container/template missing');
+      return;
+    }
+
     btnAddPackage.addEventListener('click', () => {
       console.log('Add package button clicked');
       const newId = 'pkg-' + Date.now();
 
-      // Get template content and replace placeholders
+      // Use template content and replace placeholder
       let content = template.innerHTML;
       content = content.replaceAll('__ID__', newId);
 
-      // Create a temporary element to hold the HTML
+      // Create element and add to container
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = content.trim();
       const newCard = tempDiv.firstElementChild;
-
-      // Append to the container
       packagesContainer.appendChild(newCard);
 
-      // Re-initialize feather icons for the new card
-      feather.replace();
+      // Re-initialize icons
+      if (typeof feather !== 'undefined') {
+        feather.replace();
+      }
 
-      // Scroll to the new card
       newCard.scrollIntoView({ behavior: 'smooth', block: 'end' });
     });
 
@@ -263,16 +269,15 @@
     packagesContainer.addEventListener('click', (e) => {
       const deleteBtn = e.target.closest('.btn-delete-package');
       if (!deleteBtn) return;
-
       const card = deleteBtn.closest('.package-card');
       if (!card) return;
-
       const packageId = card.getAttribute('data-package-id');
       const confirmDelete = confirm(`¿Está seguro de que desea eliminar el paquete "${packageId}"?`);
       if (confirmDelete) {
         card.remove();
       }
     });
-  </script>
+  });
+</script>
 </body>
 </html>
