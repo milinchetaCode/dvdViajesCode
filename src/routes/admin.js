@@ -5,13 +5,88 @@ const cloudinary = require('cloudinary').v2;
 const streamifier = require('streamifier');
 const requireLogin = require('../../middleware/requireLogin');
 
-// Services for your original admin data
+// Services for package CRUD and destacados
 const {
-  loadPackagesJSON,
-  savePackagesJSON,
+  getPackages,
+  createPackage,
+  updatePackage,
+  deletePackage,
   loadDestacadosJSON,
   saveDestacadosJSON,
 } = require('../services/supabaseStorage');
+
+// ADMIN PANEL GET
+router.get('/panel', requireLogin, async (req, res) => {
+  try {
+    const paquetes = await getPackages();
+    const destacados = await loadDestacadosJSON();
+    res.render('admin/panel', { paquetes, destacados, user: req.session.user });
+  } catch (err) {
+    console.error('Error loading admin data:', err);
+    res.status(500).send('Error loading admin data');
+  }
+});
+
+// ADMIN PANEL SAVE (create/update)
+router.post('/panel', requireLogin, async (req, res) => {
+  try {
+    const paquetesForm = req.body.paquetes || {};
+    // Ensure paquetesForm is an object
+    if (typeof paquetesForm !== 'object') {
+      return res.status(400).send('Datos de paquetes inválidos.');
+    }
+    // Process each package entry
+    const keys = Object.keys(paquetesForm);
+    for (const id of keys) {
+      const pkg = paquetesForm[id];
+      // Determine if this is a new package (no id in DB)
+      const exists = await supabase.from('packages').select('id').eq('id', id).single();
+      if (exists.data) {
+        await updatePackage(id, {
+          event_name: pkg.eventName,
+          ticket_price: pkg.ticketPrice,
+          flight_info: pkg.flightInfo,
+          hotel_info: pkg.hotelInfo,
+          description: pkg.description,
+          availability_dates: pkg.availabilityDates,
+          photo_url: pkg.photoUrl,
+          visible: pkg.visible === '1',
+        });
+      } else {
+        await createPackage({
+          event_name: pkg.eventName,
+          ticket_price: pkg.ticketPrice,
+          flight_info: pkg.flightInfo,
+          hotel_info: pkg.hotelInfo,
+          description: pkg.description,
+          availability_dates: pkg.availabilityDates,
+          photo_url: pkg.photoUrl,
+          visible: pkg.visible === '1',
+        });
+      }
+    }
+    if (req.body.destacados !== undefined) {
+      await saveDestacadosJSON(req.body.destacados);
+    }
+    res.redirect('/admin/panel');
+  } catch (err) {
+    console.error('Error saving admin data:', err);
+    res.status(500).send('Error saving admin data');
+  }
+});
+
+// DELETE package endpoint
+router.post('/panel/delete/:id', requireLogin, async (req, res) => {
+  try {
+    const id = req.params.id;
+    await deletePackage(id);
+    res.sendStatus(200);
+  } catch (err) {
+    console.error('Error deleting package:', err);
+    res.status(500).send('Error deleting package');
+  }
+});
+
 
 // Configure Cloudinary
 cloudinary.config({

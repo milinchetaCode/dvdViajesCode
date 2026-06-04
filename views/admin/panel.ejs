@@ -229,6 +229,8 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
+    console.log('Admin panel script DOMContentLoaded');
+    // Initialize Feather icons if available
     // Initialize Feather icons if available
     if (typeof feather !== 'undefined') {
       feather.replace();
@@ -255,7 +257,12 @@
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = content.trim();
       const newCard = tempDiv.firstElementChild;
+      if (!newCard) {
+        console.error('Failed to create new card element');
+        return;
+      }
       packagesContainer.appendChild(newCard);
+      console.log('New package card added');
 
       // Re-initialize icons
       if (typeof feather !== 'undefined') {
