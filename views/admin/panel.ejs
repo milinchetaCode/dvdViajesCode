@@ -228,14 +228,15 @@
   </template>
 
   <script>
-    // Debug: script loaded
-    console.log('Admin panel script loaded');
+    // Initialize Feather icons
+    feather.replace();
+
     const btnAddPackage = document.getElementById('btn-add-package');
-    console.log('Button element:', btnAddPackage);
     const packagesContainer = document.getElementById('packages-container');
     const template = document.getElementById('package-card-template');
 
-      // Debug: button click
+    // Add package event
+    btnAddPackage.addEventListener('click', () => {
       console.log('Add package button clicked');
       const newId = 'pkg-' + Date.now();
 
@@ -246,7 +247,7 @@
       // Create a temporary element to hold the HTML
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = content.trim();
-      const newCard = tempDiv.firstChild;
+      const newCard = tempDiv.firstElementChild;
 
       // Append to the container
       packagesContainer.appendChild(newCard);
