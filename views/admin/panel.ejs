@@ -47,10 +47,17 @@
       <div id="packages-container" class="space-y-8">
         <% paquetes.forEach((pkg) => { %>
         <div class="bg-white rounded-2xl shadow-md p-6 border border-gray-200 package-card" data-package-id="<%= pkg.id %>">
-          <div class="flex justify-between items-center mb-4">
-            <h2 class="text-xl font-semibold text-green-700">
-              Paquete ID: <span class="font-mono text-gray-600"><%= pkg.id %></span> — <%= pkg.eventName %>
-            </h2>
+          <div class="flex flex-wrap justify-between items-center mb-4 gap-4">
+            <div class="flex flex-wrap items-center gap-4">
+              <h2 class="text-xl font-semibold text-green-700">
+                Paquete ID: <span class="font-mono text-gray-600"><%= pkg.id %></span> — <%= pkg.eventName %>
+              </h2>
+              <div class="flex items-center space-x-2 bg-gray-50 px-3 py-1 rounded-full border border-gray-200">
+                <input id="visible-<%= pkg.id %>" type="checkbox" name="paquetes[<%= pkg.id %>][visible]" value="1" <%= pkg.visible ? 'checked' : '' %>
+                  class="rounded border-gray-300 text-accent focus:ring-accent"/>
+                <label for="visible-<%= pkg.id %>" class="font-semibold text-sm select-none text-gray-700">Visible</label>
+              </div>
+            </div>
             <button type="button" class="btn-delete-package bg-red-100 hover:bg-red-200 text-red-600 p-2 rounded-lg transition-colors" title="Eliminar Paquete">
               <i data-feather="trash-2" class="w-5 h-5"></i>
             </button>
@@ -105,29 +112,12 @@
                 class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-accent focus:outline-none"/>
             </div>
 
-            <!-- Visible -->
-            <div class="flex items-center space-x-2 mt-4">
-              <input id="visible-<%= pkg.id %>" type="checkbox" name="paquetes[<%= pkg.id %>][visible]" value="1" <%= pkg.visible ? 'checked' : '' %>
-                class="rounded border-gray-300 text-accent focus:ring-accent"/>
-              <label for="visible-<%= pkg.id %>" class="font-semibold select-none">Visible</label>
-            </div>
-
             <!-- Photo -->
             <div>
-              <label class="block mb-1 font-semibold" for="photo-<%= pkg.id %>">Foto</label>
-              <select id="photo-<%= pkg.id %>" name="paquetes[<%= pkg.id %>][foto]"
-                class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-accent focus:outline-none">
-                <option value="">-- Seleccionar --</option>
-                <option value="f1" <%= pkg.foto === 'f1' ? 'selected' : '' %>>f1</option>
-                <option value="basquet" <%= pkg.foto === 'basquet' ? 'selected' : '' %>>basquet</option>
-                <option value="tenis" <%= pkg.foto === 'tenis' ? 'selected' : '' %>>tenis</option>
-                <option value="futbol" <%= pkg.foto === 'futbol' ? 'selected' : '' %>>futbol</option>
-                <option value="playa" <%= pkg.foto === 'playa' ? 'selected' : '' %>>playa</option>
-                <option value="ciudad" <%= pkg.foto === 'ciudad' ? 'selected' : '' %>>ciudad</option>
-              </select>
+              <input type="hidden" name="paquetes[<%= pkg.id %>][foto]" value="<%= pkg.foto || '' %>"/>
 
               <!-- Photo URL -->
-              <label class="block mt-3 mb-1 font-semibold" for="photoUrl-<%= pkg.id %>">URL de Imagen (copiar de galería de fotos)</label>
+              <label class="block mb-1 font-semibold" for="photoUrl-<%= pkg.id %>">URL de Imagen (copiar de galería de fotos)</label>
               <div class="flex items-center gap-2">
                 <input id="photoUrl-<%= pkg.id %>" type="url" name="paquetes[<%= pkg.id %>][photoUrl]" value="<%= pkg.photoUrl || '' %>"
                   placeholder="https://example.com/imagen.jpg"
@@ -156,10 +146,17 @@
   <!-- HTML Template for dynamic new package creation -->
   <template id="package-card-template">
     <div class="bg-white rounded-2xl shadow-md p-6 border border-gray-200 package-card" data-package-id="__ID__">
-      <div class="flex justify-between items-center mb-4">
-        <h2 class="text-xl font-semibold text-green-700">
-          Nuevo Paquete: <span class="font-mono text-gray-600">__ID__</span>
-        </h2>
+      <div class="flex flex-wrap justify-between items-center mb-4 gap-4">
+        <div class="flex flex-wrap items-center gap-4">
+          <h2 class="text-xl font-semibold text-green-700">
+            Nuevo Paquete: <span class="font-mono text-gray-600">__ID__</span>
+          </h2>
+          <div class="flex items-center space-x-2 bg-gray-50 px-3 py-1 rounded-full border border-gray-200">
+            <input id="visible-__ID__" type="checkbox" name="paquetes[__ID__][visible]" value="1" checked
+              class="rounded border-gray-300 text-accent focus:ring-accent"/>
+            <label for="visible-__ID__" class="font-semibold text-sm select-none text-gray-700">Visible</label>
+          </div>
+        </div>
         <button type="button" class="btn-delete-package bg-red-100 hover:bg-red-200 text-red-600 p-2 rounded-lg transition-colors" title="Eliminar Paquete">
           <i data-feather="trash-2" class="w-5 h-5"></i>
         </button>
@@ -213,29 +210,12 @@
             class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-accent focus:outline-none"/>
         </div>
 
-        <!-- Visible -->
-        <div class="flex items-center space-x-2 mt-4">
-          <input id="visible-__ID__" type="checkbox" name="paquetes[__ID__][visible]" value="1" checked
-            class="rounded border-gray-300 text-accent focus:ring-accent"/>
-          <label for="visible-__ID__" class="font-semibold select-none">Visible</label>
-        </div>
-
         <!-- Photo -->
         <div>
-          <label class="block mb-1 font-semibold" for="photo-__ID__">Foto</label>
-          <select id="photo-__ID__" name="paquetes[__ID__][foto]"
-            class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-accent focus:outline-none">
-            <option value="" selected>-- Seleccionar --</option>
-            <option value="f1">f1</option>
-            <option value="basquet">basquet</option>
-            <option value="tenis">tenis</option>
-            <option value="futbol">futbol</option>
-            <option value="playa">playa</option>
-            <option value="ciudad">ciudad</option>
-          </select>
+          <input type="hidden" name="paquetes[__ID__][foto]" value=""/>
 
           <!-- Photo URL -->
-          <label class="block mt-3 mb-1 font-semibold" for="photoUrl-__ID__">URL de Imagen (copiar de galería de fotos)</label>
+          <label class="block mb-1 font-semibold" for="photoUrl-__ID__">URL de Imagen (copiar de galería de fotos)</label>
           <div class="flex items-center gap-2">
             <input id="photoUrl-__ID__" type="url" name="paquetes[__ID__][photoUrl]" value=""
               placeholder="https://example.com/imagen.jpg"
@@ -248,15 +228,15 @@
   </template>
 
   <script>
-    feather.replace();
-
+    // Debug: script loaded
+    console.log('Admin panel script loaded');
     const btnAddPackage = document.getElementById('btn-add-package');
+    console.log('Button element:', btnAddPackage);
     const packagesContainer = document.getElementById('packages-container');
     const template = document.getElementById('package-card-template');
 
-    // Add package event
-    btnAddPackage.addEventListener('click', () => {
-      // Generate a simple unique ID
+      // Debug: button click
+      console.log('Add package button clicked');
       const newId = 'pkg-' + Date.now();
 
       // Get template content and replace placeholders
