@@ -122,6 +122,27 @@ router.post('/panel', requireLogin, async (req, res) => {
   }
 });
 
+// CREATE new package endpoint (returns JSON)
+router.post('/panel/create', requireLogin, async (req, res) => {
+  try {
+    // Create a minimal package with default values
+    const newPackage = await createPackage({
+      eventName: 'Nuevo Paquete',
+      ticketPrice: '',
+      flightInfo: '',
+      hotelInfo: '',
+      description: '',
+      availabilityDates: '',
+      photoUrl: '',
+      visible: true,
+    });
+    res.json(newPackage);
+  } catch (err) {
+    console.error('Error creating package:', err);
+    res.status(500).json({ error: 'Error creating package' });
+  }
+});
+
 // DELETE package endpoint
 router.post('/panel/delete/:id', requireLogin, async (req, res) => {
   try {

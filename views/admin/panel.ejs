@@ -231,7 +231,6 @@
   document.addEventListener('DOMContentLoaded', () => {
     console.log('Admin panel script DOMContentLoaded');
     // Initialize Feather icons if available
-    // Initialize Feather icons if available
     if (typeof feather !== 'undefined') {
       feather.replace();
     }
@@ -245,43 +244,122 @@
       return;
     }
 
-    btnAddPackage.addEventListener('click', () => {
+    // Add package button - creates package in backend first
+    btnAddPackage.addEventListener('click', async () => {
       console.log('Add package button clicked');
-      const newId = 'pkg-' + Date.now();
+      
+      // Disable button to prevent double-clicks
+      btnAddPackage.disabled = true;
+      btnAddPackage.textContent = 'Creando...';
 
-      // Use template content and replace placeholder
-      let content = template.innerHTML;
-      content = content.replaceAll('__ID__', newId);
+      try {
+        // Call backend to create package with UUID
+        const response = await fetch('/admin/panel/create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
 
-      // Create element and add to container
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = content.trim();
-      const newCard = tempDiv.firstElementChild;
-      if (!newCard) {
-        console.error('Failed to create new card element');
-        return;
+        if (!response.ok) {
+          throw new Error('Error creating package');
+        }
+
+        const newPackage = await response.json();
+        console.log('New package created:', newPackage);
+
+        // Use template content and replace placeholder with real UUID
+        let content = template.innerHTML;
+        content = content.replaceAll('__ID__', newPackage.id);
+
+        // Create element and add to container
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = content.trim();
+        const newCard = tempDiv.firstElementChild;
+        if (!newCard) {
+          console.error('Failed to create new card element');
+          return;
+        }
+
+        // Update the card with the package data
+        const eventNameInput = newCard.querySelector(`input[name="paquetes[${newPackage.id}][eventName]"]`);
+        if (eventNameInput) {
+          eventNameInput.value = newPackage.eventName;
+        }
+
+        packagesContainer.appendChild(newCard);
+        console.log('New package card added');
+
+        // Re-initialize icons
+        if (typeof feather !== 'undefined') {
+          feather.replace();
+        }
+
+        newCard.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      } catch (error) {
+        console.error('Error creating package:', error);
+        alert('Error al crear el paquete. Por favor, intente de nuevo.');
+      } finally {
+        // Re-enable button
+        btnAddPackage.disabled = false;
+        btnAddPackage.innerHTML = '<i data-feather="plus" class="w-4 h-4"></i> Agregar Nuevo Paquete';
+        if (typeof feather !== 'undefined') {
+          feather.replace();
+        }
       }
-      packagesContainer.appendChild(newCard);
-      console.log('New package card added');
-
-      // Re-initialize icons
-      if (typeof feather !== 'undefined') {
-        feather.replace();
-      }
-
-      newCard.scrollIntoView({ behavior: 'smooth', block: 'end' });
     });
 
-    // Delete package event (delegated)
-    packagesContainer.addEventListener('click', (e) => {
+    // Delete package event (delegated) - now calls backend
+    packagesContainer.addEventListener('click', async (e) => {
       const deleteBtn = e.target.closest('.btn-delete-package');
       if (!deleteBtn) return;
+      
       const card = deleteBtn.closest('.package-card');
       if (!card) return;
+      
       const packageId = card.getAttribute('data-package-id');
-      const confirmDelete = confirm(`¿Está seguro de que desea eliminar el paquete "${packageId}"?`);
-      if (confirmDelete) {
-        card.remove();
+      
+      // Get package name for confirmation message
+      const eventNameInput = card.querySelector('input[name*="[eventName]"]');
+      const packageName = eventNameInput ? eventNameInput.value : packageId;
+      
+      const confirmDelete = confirm(`¿Está seguro de que desea eliminar el paquete "${packageName}"?\n\nEsta acción no se puede deshacer.`);
+      
+      if (!confirmDelete) return;
+
+      // Disable delete button to prevent double-clicks
+      deleteBtn.disabled = true;
+      deleteBtn.style.opacity = '0.5';
+
+      try {
+        // Call backend to delete package
+        const response = await fetch(`/admin/panel/delete/${packageId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Error deleting package');
+        }
+
+        console.log('Package deleted:', packageId);
+        
+        // Remove card from DOM with animation
+        card.style.transition = 'opacity 0.3s ease-out';
+        card.style.opacity = '0';
+        setTimeout(() => {
+          card.remove();
+        }, 300);
+        
+      } catch (error) {
+        console.error('Error deleting package:', error);
+        alert('Error al eliminar el paquete. Por favor, intente de nuevo.');
+        
+        // Re-enable button on error
+        deleteBtn.disabled = false;
+        deleteBtn.style.opacity = '1';
       }
     });
   });
