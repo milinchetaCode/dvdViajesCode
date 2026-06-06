@@ -20,6 +20,7 @@ router.get('/paquete/:id', async (req, res) => {
     // Render the paquete template with the package data
     res.render('paquete', {
       paquete: paquete,
+      tenant: res.locals.tenant || null,
       currentPage: null // optional, depends on your template logic
     });
   } catch (err) {

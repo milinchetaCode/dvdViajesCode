@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiénes somos - Manuel Figueroa Viajes</title>
+  <title>Quiénes somos - <%= (typeof tenant !== 'undefined' && tenant && tenant.company_name) ? tenant.company_name : 'Manuel Figueroa Viajes' %></title>
 
   <!-- Tailwind compiled CSS -->
   <link rel="stylesheet" href="/styles/output.css">
@@ -41,14 +41,18 @@
 
       <!-- About Text Section (Card) -->
       <section class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200 mb-16">
-        <p class="leading-relaxed mb-4">
-          Lic. en Turismo, con más de 20 años de trayectoria en la industria, desarrollada en múltiples ámbitos, desde
-          compañías aéreas internacionales de primer nivel, agencias de viajes locales y hasta habiendo emprendido un
-          proyecto propio.
-        </p>
-        <p class="leading-relaxed">
-          Profesional recibido en la Universidad del Salvador en Buenos Aires.
-        </p>
+        <% if (typeof tenant !== 'undefined' && tenant && tenant.about_us) { %>
+          <p class="leading-relaxed"><%= tenant.about_us %></p>
+        <% } else { %>
+          <p class="leading-relaxed mb-4">
+            Lic. en Turismo, con más de 20 años de trayectoria en la industria, desarrollada en múltiples ámbitos, desde
+            compañías aéreas internacionales de primer nivel, agencias de viajes locales y hasta habiendo emprendido un
+            proyecto propio.
+          </p>
+          <p class="leading-relaxed">
+            Profesional recibido en la Universidad del Salvador en Buenos Aires.
+          </p>
+        <% } %>
       </section>
 
       <!-- CTA -->
@@ -59,12 +63,20 @@
         <p class="mb-6 text-light">
           Estamos aquí para ayudarte a descubrir el mundo.
         </p>
-        <a href="https://wa.me/5491133931500?text=<%= encodeURIComponent(
-          'Hola, quiero más información sobre Manuel Figueroa Viajes y sus servicios.'
-        ) %>" target="_blank" rel="noopener noreferrer" class="btn-accent inline-flex items-center gap-3">
-          <i data-feather="message-circle" class="w-5 h-5 text-white"></i>
-          Contáctanos por WhatsApp
-        </a>
+        <% if (typeof tenant !== 'undefined' && tenant && tenant.phone_number) { %>
+          <a href="https://wa.me/<%= tenant.phone_number.replace(/\D/g, '') %>?text=<%= encodeURIComponent('Hola, quiero más información sobre ' + tenant.company_name + ' y sus servicios.') %>"
+             target="_blank" rel="noopener noreferrer" class="btn-accent inline-flex items-center gap-3">
+            <i data-feather="message-circle" class="w-5 h-5 text-white"></i>
+            Contáctanos por WhatsApp
+          </a>
+        <% } else { %>
+          <a href="https://wa.me/5491133931500?text=<%= encodeURIComponent(
+            'Hola, quiero más información sobre Manuel Figueroa Viajes y sus servicios.'
+          ) %>" target="_blank" rel="noopener noreferrer" class="btn-accent inline-flex items-center gap-3">
+            <i data-feather="message-circle" class="w-5 h-5 text-white"></i>
+            Contáctanos por WhatsApp
+          </a>
+        <% } %>
       </div>
 
     </main>

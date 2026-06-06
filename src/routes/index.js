@@ -40,6 +40,7 @@ router.get("/", async (req, res) => {
       packages, // Will be empty array if Supabase fails
       heroImages, // Will be empty array if Cloudinary fails
       continents, // Array of distinct continents
+      tenant: res.locals.tenant || null, // Inject tenant data from middleware
       currentPage: "home",
     });
   } catch (err) {

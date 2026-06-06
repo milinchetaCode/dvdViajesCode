@@ -104,6 +104,25 @@ async function deletePackage(id) {
   return true;
 }
 
+/** Get a tenant by domain */
+async function getTenantByDomain(domain) {
+  try {
+    const { data, error } = await supabase
+      .from('tenants')
+      .select('*')
+      .eq('domain', domain)
+      .single();
+    if (error) {
+      console.error('❌ Supabase getTenantByDomain error:', error.message);
+      return null;
+    }
+    return data || null;
+  } catch (err) {
+    console.error('❌ Supabase connection error in getTenantByDomain:', err.message);
+    return null;
+  }
+}
+
 /** Get distinct continents from packages table */
 async function getContinents() {
   try {
@@ -131,4 +150,5 @@ module.exports = {
   createPackage,
   updatePackage,
   deletePackage,
+  getTenantByDomain,
 };

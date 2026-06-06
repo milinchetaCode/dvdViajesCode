@@ -6,6 +6,7 @@ const helmet = require('helmet');
 const compression = require('compression');
 const morgan = require('morgan');
 const rateLimiter = require('./middleware/rateLimiter');
+const tenantResolver = require('./middleware/tenantResolver');
 const { getConfig } = require('./config/env');
 
 
@@ -99,6 +100,9 @@ const indexRoutes = require('./src/routes/index');
 const paqueteRoutes = require('./src/routes/paquete');
 const adminRoutes = require('./src/routes/admin');
 
+// Apply tenant resolver middleware before routes
+app.use(tenantResolver);
+
 // Use routes
 app.use('/', indexRoutes);
 app.use('/', paqueteRoutes);
@@ -106,15 +110,15 @@ app.use('/admin', adminRoutes);
 
 // ✅ New standalone Hoteles route
 app.get('/hoteles', (req, res) => {
-  res.render('hoteles'); // renderiza views/hoteles.ejs
+  res.render('hoteles', { tenant: res.locals.tenant || null });
 });
 
 app.get('/about', (req, res) => {
-  res.render('about', { currentPage: 'about' });
+  res.render('about', { currentPage: 'about', tenant: res.locals.tenant || null });
 });
 
 app.get('/faq', (req, res) => {
-  res.render('faq', { currentPage: 'faq' });
+  res.render('faq', { currentPage: 'faq', tenant: res.locals.tenant || null });
 });
 
 // ✅ Catch-all 404 handler (must go LAST, after static and all routes)
