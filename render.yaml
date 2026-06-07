@@ -9,8 +9,7 @@ services:
         value: production
       - key: PORT
         value: "10000"
-    # Import environment variables from .env file
-    envFile: .env
+
     # Specify the directory containing the source code
     repo: .
     # Auto deploy on push to main branch
