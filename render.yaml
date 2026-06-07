@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: dvd-viajes
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "10000"
+    # Import environment variables from .env file
+    envFile: .env
+    # Specify the directory containing the source code
+    repo: .
+    # Auto deploy on push to main branch
+    autoDeploy: true
+    # Health check path
+    healthCheckPath: "/"
