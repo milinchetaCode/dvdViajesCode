@@ -110,13 +110,12 @@ async function getTenantByDomain(domain) {
     const { data, error } = await supabase
       .from('tenants')
       .select('*')
-      .eq('domain', domain)
-      .single();
+      .eq('domain', domain);
     if (error) {
       console.error('❌ Supabase getTenantByDomain error:', error.message);
       return null;
     }
-    return data || null;
+    return data && data.length > 0 ? data[0] : null;
   } catch (err) {
     console.error('❌ Supabase connection error in getTenantByDomain:', err.message);
     return null;
